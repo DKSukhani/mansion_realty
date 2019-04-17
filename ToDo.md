@@ -14,3 +14,5 @@
    - Automatic Reply email
      - (A) First through YAMM
      - (B) Python based email 
+
+4. data-tracking-element-type="2" jslog="56037; track:impression,click"

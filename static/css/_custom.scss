@@ -33,9 +33,10 @@ b, strong{
 }
 .navbar-brand {
     font-weight: 700;
+    
 }
 .navbar-inverse .navbar-nav .nav-link, .navbar .navbar-brand, .navbar-toggler span {
-    color: rgba(255,255,255,.8);
+    color: white;
 }
 .navbar .nav-item .active, .navbar .nav-link:hover,.navbar .nav-link:focus, .navbar .navbar-brand:hover{
     color: #fff !important;
