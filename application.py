@@ -4,6 +4,18 @@ from flask import Flask, render_template, request
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+from pprint import pprint
+
+scope = ["https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
+
+creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
+
+client = gspread.authorize(creds)
+
+sheet = client.open("mansionreality").sheet1
+
 app = Flask(__name__)
 
 
@@ -14,6 +26,22 @@ app = Flask(__name__)
 @app.route("/")
 def landing_page():
     return render_template("landing_page.html")
+
+@app.route("/form")
+def form():
+    return render_template("form.html")
+
+@app.route("/form_result", methods=["POST", "GET"])
+def form_result():
+    if request.method == "POST":
+        fname = request.form.get("firstname")
+        lname = request.form.get("lastname")
+        insertRow = [fname, lname]
+        sheet.append_row(insertRow)
+
+    data = sheet.get_all_records()  # Get a list of all records
+    return render_template("form_result.html", data=data)    
+
 
 # @app.route("/book", methods=["POST"])
 # def book():
